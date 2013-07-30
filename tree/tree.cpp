@@ -101,6 +101,23 @@ void inorder_iter(TreeNode *head)
    }
 }
 
+// BFS
+void bfs(TreeNode *head)
+{
+   if ( head == NULL ) return;
+   queue<TreeNode *> que;
+   que.push(head);
+   while ( !que.empty() )
+   {
+      TreeNode *curr = que.front();
+      que.pop();
+      visit(curr);
+
+      if ( curr->left != NULL ) que.push(curr->left);
+      if ( curr->right != NULL ) que.push(curr->right);
+   }
+}
+
 TreeNode* fromArray(const vector<string>& input)
 {
    queue<TreeNode *> que;
@@ -113,9 +130,9 @@ TreeNode* fromArray(const vector<string>& input)
       que.pop();
       if ( input[p] != "#" )
       {
-        TreeNode *left = new TreeNode(str2i(input[p]));
-        curr->left = left;
-        que.push(left);
+         TreeNode *left = new TreeNode(str2i(input[p]));
+         curr->left = left;
+         que.push(left);
       }
       ++p;
       if ( p < input.size() && input[p] != "#" )
@@ -217,5 +234,9 @@ int main()
    cout << "\nPost-order recursively" << endl;
    postorder_recur(head);
    
+   // BFS
+   cout << "\nBFS" << endl;
+   bfs(head);
+
    return 0;
 }
